@@ -17,15 +17,14 @@ namespace RestfullApiNet6M136.Implementation.Services
         readonly SignInManager<AppUser> signInManager;
         readonly ITokenHandler tokenHandler;
         readonly IUserService UserService;
-        readonly IHttpContextAccessor _httpContextAccessor;
+       
 
-        public AuthService(SignInManager<AppUser> _signInManager, UserManager<AppUser> _userManager, ITokenHandler _tokenHandler, IUserService _UserService2, IHttpContextAccessor httpContextAccessor)
+        public AuthService(SignInManager<AppUser> _signInManager, UserManager<AppUser> _userManager, ITokenHandler _tokenHandler, IUserService _UserService2)
         {
             signInManager = _signInManager;
             userManager = _userManager;
             this.tokenHandler = _tokenHandler;
             this.UserService = _UserService2;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         //todo burda LoginUserRespon islede bilerdim,amma bizim bir responsemiz olmalidi o da generic yaratdigim

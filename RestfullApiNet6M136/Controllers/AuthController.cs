@@ -42,17 +42,9 @@ namespace RestfullApiNet6M136.Controllers
         [HttpPost("password-reset-token")]
         public async Task<IActionResult> PasswordReset(string email, string currentPas, string newPas)
         {
-
             var data = await authoService.PasswordResetAsnyc(email, currentPas,newPas);
             return StatusCode(data.StatusCode, data);
         }
 
-        //[HttpGet("verify-reset-token")]
-        //public async Task<IActionResult> VerifyResetToken(string token, string userId)
-        //{
-
-        //    var response = await authoService.VerifyResetTokenAsync(token, userId);
-        //    return Ok(response);
-        //}
     }
 }

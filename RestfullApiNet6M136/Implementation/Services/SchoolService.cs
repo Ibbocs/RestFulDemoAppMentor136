@@ -144,6 +144,7 @@ namespace RestfullApiNet6M136.Implementation.Services
                 {
                     var dtos = mapper.Map<List<SchoolGetDTO>>(data);
 
+
                     return new GenericResponseModel<List<SchoolGetDTO>>
                     {
                         Data = dtos,
