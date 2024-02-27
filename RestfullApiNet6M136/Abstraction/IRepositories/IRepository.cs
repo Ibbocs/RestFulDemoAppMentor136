@@ -18,8 +18,6 @@ namespace RestfullApiNet6M136.Abstraction.IRepositories
         Task<bool> RemoveById(int id);
   
         bool Update(T data);
-
-        
     }
 
     

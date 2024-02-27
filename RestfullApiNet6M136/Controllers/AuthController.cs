@@ -24,7 +24,7 @@ namespace RestfullApiNet6M136.Controllers
             return StatusCode(data.StatusCode, data);
         }
 
-        [HttpPost("[action]")]
+        [HttpPost("refresh-token-login")]
         public async Task<IActionResult> RefreshTokenLogin(string refreshToken)
         {
             var data = await authoService.LoginWithRefreshTokenAsync(refreshToken);
@@ -32,7 +32,7 @@ namespace RestfullApiNet6M136.Controllers
         }
 
         [HttpPut("[action]")]
-        [Authorize(AuthenticationSchemes = "Admin", Roles = "Admin,User")]
+        [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> LogOut(string userNameOrEmail)
         {
             var data = await authoService.LogOut(userNameOrEmail);

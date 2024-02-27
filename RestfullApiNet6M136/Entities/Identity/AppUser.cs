@@ -2,7 +2,7 @@
 
 namespace RestfullApiNet6M136.Entities.Identity
 {
-    public class AppUser: IdentityUser<string>
+    public class AppUser : IdentityUser<string>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
