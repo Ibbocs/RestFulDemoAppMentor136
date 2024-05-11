@@ -38,7 +38,6 @@ namespace RestfullApiNet6M136.Controllers
         {
             var data = await _schoolService.AddSchool(model);
             return StatusCode(data.StatusCode, data);
-
         }
 
         [HttpPut("[action]")]

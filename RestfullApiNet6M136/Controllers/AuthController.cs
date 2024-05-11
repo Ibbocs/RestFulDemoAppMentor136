@@ -5,7 +5,7 @@ using RestfullApiNet6M136.Abstraction.Services;
 
 namespace RestfullApiNet6M136.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -40,6 +40,7 @@ namespace RestfullApiNet6M136.Controllers
         }
 
         [HttpPost("password-reset-token")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> PasswordReset(string email, string currentPas, string newPas)
         {
             var data = await authoService.PasswordResetAsnyc(email, currentPas,newPas);

@@ -1,11 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using RestfullApiNet6M136.Abstraction.IRepositories;
-using RestfullApiNet6M136.Entities.Common;
-using System.Linq.Expressions;
 using RestfullApiNet6M136.Context;
-using Microsoft.EntityFrameworkCore.Query;
-using System.Linq;
+using RestfullApiNet6M136.Entities.Common;
 
 namespace RestfullApiNet6M136.Implementation.Repositories
 {

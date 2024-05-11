@@ -36,6 +36,7 @@ namespace RestfullApiNet6M136.Implementation.Services
             {
                 //new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Email, user.Email)
             };
 
@@ -65,8 +66,6 @@ namespace RestfullApiNet6M136.Implementation.Services
 
             return tokenDTO;
         }
-
-
 
         public string CreateRefreshToken()
         {

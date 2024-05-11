@@ -12,6 +12,7 @@ namespace RestfullApiNet6M136.Context
         {
         }
 
+
         public DbSet<Student> Students { get; set; }
         public DbSet<School> Schools { get; set; }
 

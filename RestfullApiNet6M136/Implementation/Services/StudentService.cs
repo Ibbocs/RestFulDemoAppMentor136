@@ -13,6 +13,7 @@ namespace RestfullApiNet6M136.Implementation.Services
     {
         private readonly IMapper mapper;
         private readonly IUnitOfWork _unitOfWork;
+
         private IRepository<Student> _student;
         private IRepository<School> _school;
 
@@ -44,7 +45,6 @@ namespace RestfullApiNet6M136.Implementation.Services
             //await _unitOfWork.GetRepository<Student>().GetByIdAsync(2);
             // await _unitOfWork.SaveChangesAsync();
             #endregion
-
 
             if (model != null)
             {

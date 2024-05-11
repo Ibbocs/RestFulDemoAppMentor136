@@ -33,6 +33,14 @@ namespace RestfullApiNet6M136.Controllers
             _repo = repo;
         }
 
+        [HttpGet]
+        public void Logum()
+        {
+            ArgumentNullException argumentNull = new("MyParamName", "MyErrorMessage");
+
+            Log.Error(argumentNull, "ArgumentNullException olu?tu: {ParamName}, {ErrorMessage}", argumentNull.ParamName, argumentNull.Message);
+        }
+
 
         //[HttpGet(Name = "GetWeatherForecast")]
         //public IEnumerable<WeatherForecast> Get()

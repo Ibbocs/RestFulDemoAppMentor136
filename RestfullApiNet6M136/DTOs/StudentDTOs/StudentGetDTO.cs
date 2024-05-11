@@ -4,7 +4,6 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        //lastname
 
         public string SchoolName { get; set; }
     }

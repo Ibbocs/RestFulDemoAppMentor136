@@ -15,7 +15,11 @@ namespace RestfullApiNet6M136.Config
 
             builder.Property(b => b.SchoolId)//int
             .IsRequired();
+            
+            //Todo "sadw"
 
         }
+        
+        
     }
 }

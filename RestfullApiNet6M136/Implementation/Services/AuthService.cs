@@ -17,14 +17,16 @@ namespace RestfullApiNet6M136.Implementation.Services
         readonly SignInManager<AppUser> signInManager;
         readonly ITokenHandler tokenHandler;
         readonly IUserService UserService;
-       
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AuthService(SignInManager<AppUser> _signInManager, UserManager<AppUser> _userManager, ITokenHandler _tokenHandler, IUserService _UserService2)
+
+        public AuthService(SignInManager<AppUser> _signInManager, UserManager<AppUser> _userManager, ITokenHandler _tokenHandler, IUserService _UserService2, IHttpContextAccessor httpContextAccessor = null)
         {
             signInManager = _signInManager;
             userManager = _userManager;
             this.tokenHandler = _tokenHandler;
             this.UserService = _UserService2;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         //todo burda LoginUserRespon islede bilerdim,amma bizim bir responsemiz olmalidi o da generic yaratdigim
@@ -90,9 +92,11 @@ namespace RestfullApiNet6M136.Implementation.Services
 
            // throw new NotFoundUserException();
         }
-
+       
         public async Task<GenericResponseModel<bool>> LogOut(string userNameOrEmail)
         {
+            //var userName = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value;
+            //var userName = _httpContextAccessor.HttpContext?.User.Identity?.Name;
             AppUser user = await userManager.FindByNameAsync(userNameOrEmail);
 
             if (user == null)
@@ -140,7 +144,6 @@ namespace RestfullApiNet6M136.Implementation.Services
             AppUser user = await userManager.FindByEmailAsync(email);
             if (user != null)
             {
-
                 var data = await userManager.ChangePasswordAsync(user, currentPas, newPas);
 
                 if (data.Succeeded)

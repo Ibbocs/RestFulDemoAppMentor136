@@ -51,7 +51,9 @@ namespace RestfullApiNet6M136.Implementation.Services
 
             AppUser user = await userManager.FindByNameAsync(model.UserName);
             if (user == null)
-                user = await userManager.FindByEmailAsync(id);
+                user = await userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+                user = await userManager.FindByIdAsync(id);
             if (user != null)
                 await userManager.AddToRoleAsync(user, "User");
 
@@ -75,47 +77,48 @@ namespace RestfullApiNet6M136.Implementation.Services
             //throw new UpdateUserException(updateResult.Errors);
         }
 
-        public async Task UpdatePasswordAsync(string userId, string resetToken, string newPassword)
-        {
-            //AppUser user = await userManager.FindByIdAsync(userId);
-            //if (user != null)
-            //{
-            //    //resetToken = resetToken.UrlDecode();
-            //    byte[] tokenBytes = WebEncoders.Base64UrlDecode(resetToken);
-            //    resetToken = Encoding.UTF8.GetString(tokenBytes);
-            //    IdentityResult result = await userManager.ResetPasswordAsync(user, resetToken, newPassword);
-            //    string a = "dcd";
-            //    if (result.Succeeded)
-            //        await userManager.UpdateSecurityStampAsync(user);
-            //    else
-            //        throw new SomeThingsWrongException();
-            //}
+        //bunu yazdirma!!!!
+        //public async Task ForgetPasswordAsync(string userId, string resetToken, string newPassword)
+        //{
+        //    //AppUser user = await userManager.FindByIdAsync(userId);
+        //    //if (user != null)
+        //    //{
+        //    //    //resetToken = resetToken.UrlDecode();
+        //    //    byte[] tokenBytes = WebEncoders.Base64UrlDecode(resetToken);
+        //    //    resetToken = Encoding.UTF8.GetString(tokenBytes);
+        //    //    IdentityResult result = await userManager.ResetPasswordAsync(user, resetToken, newPassword);
+        //    //    string a = "dcd";
+        //    //    if (result.Succeeded)
+        //    //        await userManager.UpdateSecurityStampAsync(user);
+        //    //    else
+        //    //        throw new SomeThingsWrongException();
+        //    //}
 
-            AppUser user = await userManager.FindByIdAsync(userId);
-            if (user != null)
-            {
-                byte[] tokenBytes = WebEncoders.Base64UrlDecode(resetToken);
-                resetToken = Encoding.UTF8.GetString(tokenBytes);
+        //    AppUser user = await userManager.FindByIdAsync(userId);
+        //    if (user != null)
+        //    {
+        //        byte[] tokenBytes = WebEncoders.Base64UrlDecode(resetToken);
+        //        resetToken = Encoding.UTF8.GetString(tokenBytes);
 
-                //byte[] tokenBytes = WebEncoders.Base64UrlDecode(resetToken);
-                //resetToken = Encoding.UTF8.GetString(tokenBytes);
+        //        //byte[] tokenBytes = WebEncoders.Base64UrlDecode(resetToken);
+        //        //resetToken = Encoding.UTF8.GetString(tokenBytes);
 
-                IdentityResult result = await userManager.ResetPasswordAsync(user, resetToken, newPassword);
+        //        IdentityResult result = await userManager.ResetPasswordAsync(user, resetToken, newPassword);
 
-                if (result.Succeeded)
-                {
-                    await userManager.UpdateSecurityStampAsync(user);
-                }
-                else
-                {
-                    return;
-                }
-            }
-            else
-            {
-                return;
-            }
-        }
+        //        if (result.Succeeded)
+        //        {
+        //            await userManager.UpdateSecurityStampAsync(user);
+        //        }
+        //        else
+        //        {
+        //            return;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return;
+        //    }
+        //}
 
         public async Task<GenericResponseModel<List<UserGetDTO>>> GetAllUsersAsync()
         {
@@ -161,6 +164,7 @@ namespace RestfullApiNet6M136.Implementation.Services
                     var userRoles = await userManager.GetRolesAsync(user);
                     await userManager.RemoveFromRolesAsync(user, userRoles);
                     await userManager.AddToRolesAsync(user, roles);
+                    //await userManager.AddToRoleAsync(user, "User");
 
                     resModel.Data = true;
                     resModel.StatusCode = 200;
@@ -210,9 +214,9 @@ namespace RestfullApiNet6M136.Implementation.Services
 
         public async Task<GenericResponseModel<bool>> DeleteUserAsync(string userIdOrName)
         {
-            AppUser user = await userManager.FindByIdAsync(userIdOrName);
             GenericResponseModel<bool> resModel = new GenericResponseModel<bool>() { Data = false, StatusCode = 400 };
 
+            AppUser user = await userManager.FindByIdAsync(userIdOrName);
             if (user == null)
                 user = await userManager.FindByNameAsync(userIdOrName);
 

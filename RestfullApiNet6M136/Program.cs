@@ -1,7 +1,7 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RestfullApiNet6M136.Abstraction.IRepositories;
@@ -17,12 +17,13 @@ using RestfullApiNet6M136.Implementation.Repositories.EntitiesRepos;
 using RestfullApiNet6M136.Implementation.Services;
 using RestfullApiNet6M136.Implementation.UnitOfWorks;
 using RestfullApiNet6M136.Mapping;
+using RestfullApiNet6M136.Validations;
 using Serilog;
+using Serilog.Context;
 using Serilog.Core;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
 using System.Collections.ObjectModel;
-using System.Configuration;
 using System.Data;
 using System.Security.Claims;
 using System.Text;
@@ -31,7 +32,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<SchoolCreateDTOValidator>());
+
+builder.Services.UseCustomValidationResponse();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -39,7 +43,8 @@ builder.Services.AddSwaggerGen();
 //string connection = "Data Source=DESKTOP-PHRL2VS;Initial Catalog=MovieDB;Integrated Security=True";
 //builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Mentor136ApiDB")));
+builder.Services.AddDbContext<AppDbContext>(options => 
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Mentor136ApiDB")));
 
 //identity
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
@@ -73,7 +78,7 @@ builder.Services.AddAuthentication(options =>
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 
-}).AddJwtBearer( options =>
+}).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new()
     {
@@ -88,11 +93,11 @@ builder.Services.AddAuthentication(options =>
 
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:SecurityKey"])),
 
-        //tiken omru qeder islemesi ucun
+        //token omru qeder islemesi ucun
         LifetimeValidator = (notBefore, expires, securityToken, validationParameters) => expires != null ? expires > DateTime.UtcNow : false,
 
         NameClaimType = ClaimTypes.Name,
-        RoleClaimType = ClaimTypes.Role,
+        RoleClaimType = ClaimTypes.Role
     };
 });
 
@@ -146,7 +151,7 @@ Logger? log = new LoggerConfiguration()
     {
         AdditionalColumns = new Collection<SqlColumn>
         {
-                new SqlColumn(columnName:"User_Id", SqlDbType.NVarChar)
+                new SqlColumn(columnName:"User_Name", SqlDbType.NVarChar)
         }
     },
      null, null
@@ -179,6 +184,15 @@ app.UseSerilogRequestLogging();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.Use(async (context, next) =>
+{
+    //var userId = context.User?.Identity?.IsAuthenticated == true ? context.User.Identity.GetUserId() : null;
+    //context.User.FindFirst(ClaimTypes.NameIdentifier);
+    var username = context.User?.Identity?.IsAuthenticated != null || true ? context.User.Identity.Name : null;
+    LogContext.PushProperty("User_Name", username);
+    await next(context);
+});
 
 
 app.MapControllers();

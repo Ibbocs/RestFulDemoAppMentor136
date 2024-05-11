@@ -72,7 +72,6 @@ namespace RestfullApiNet6M136.Implementation.UnitOfWorks
                 return (IRepository<TEntity>)_repositories[typeof(TEntity)];
             }
 
-
             IRepository<TEntity> repository = new Repository<TEntity>(context /*as AppDbContext*/);
             _repositories.Add(typeof(TEntity), repository);
             return repository;
