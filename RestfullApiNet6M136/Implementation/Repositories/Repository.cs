@@ -24,7 +24,6 @@ namespace RestfullApiNet6M136.Implementation.Repositories
             return entityEntry.State == EntityState.Added;
         }
 
-
         public IQueryable<T> GetAll()
         {
             //query halinda table aliram
@@ -42,7 +41,7 @@ namespace RestfullApiNet6M136.Implementation.Repositories
 
             return await query.FirstOrDefaultAsync(data => data.Id == id);
         }
-
+//todo Burda xeta ola biler...
         public IQueryable<T> Query()
         {
             return appDbContext.Set<T>();

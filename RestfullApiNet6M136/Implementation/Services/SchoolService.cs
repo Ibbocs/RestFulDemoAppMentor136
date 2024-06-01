@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RestfullApiNet6M136.Abstraction.Services;
 using RestfullApiNet6M136.Context;
 using RestfullApiNet6M136.DTOs.SchoolDTOs;
 using RestfullApiNet6M136.Models;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace RestfullApiNet6M136.Implementation.Services
 {

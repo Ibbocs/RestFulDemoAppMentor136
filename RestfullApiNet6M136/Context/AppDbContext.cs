@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using RestfullApiNet6M136.Entities.AppdbContextEntity;
 using RestfullApiNet6M136.Entities.Identity;
 using System.Reflection;
+using RestfullApiNet6M136.Config;
 
 namespace RestfullApiNet6M136.Context
 {
@@ -27,6 +28,7 @@ namespace RestfullApiNet6M136.Context
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
             //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            // modelBuilder.ApplyConfiguration(new StudentConfiguration());
 
             //modelBuilder.Entity<School>()
             //    .HasMany(sc => sc.Students)
@@ -38,7 +40,6 @@ namespace RestfullApiNet6M136.Context
                 .WithMany(sc => sc.Students)
                 .HasForeignKey(st => st.SchoolId)
                 .OnDelete(DeleteBehavior.Cascade);
-
         }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RestfullApiNet6M136.Abstraction.Services;
 using RestfullApiNet6M136.DTOs.SchoolDTOs;
+using RestfullApiNet6M136.Models;
 
 namespace RestfullApiNet6M136.Controllers
 {
@@ -11,6 +12,7 @@ namespace RestfullApiNet6M136.Controllers
     public class SchoolController : ControllerBase
     {
         private readonly ISchoolService _schoolService;
+
         public SchoolController(ISchoolService schoolService)
         {
             _schoolService = schoolService;
@@ -22,9 +24,11 @@ namespace RestfullApiNet6M136.Controllers
         {
             var data = await _schoolService.GetAllSchool();
             return StatusCode(data.StatusCode, data);
+            
+            
         }
 
-        [HttpGet("[action]/{Id}")]//FromQuery falan yazsam lazim deyil burda id almaq,amma burda  alanda is required olur
+        [HttpGet("[action]/{Id}")] //FromQuery falan yazsam lazim deyil burda id almaq,amma burda  alanda is required olur
         [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> GetSchool(int Id)
         {

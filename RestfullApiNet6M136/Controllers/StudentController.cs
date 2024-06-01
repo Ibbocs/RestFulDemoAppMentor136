@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RestfullApiNet6M136.Abstraction.Services;
 using RestfullApiNet6M136.DTOs.StudentDTOs;
+using RestfullApiNet6M136.Models;
 
 namespace RestfullApiNet6M136.Controllers
 {
@@ -10,6 +11,7 @@ namespace RestfullApiNet6M136.Controllers
     public class StudentController : ControllerBase
     {
         private readonly IStudentService _studentService;
+
         public StudentController(IStudentService studentService)
         {
             _studentService = studentService;
@@ -31,6 +33,14 @@ namespace RestfullApiNet6M136.Controllers
             return StatusCode(data.StatusCode, data);
         }
 
+        [HttpGet("[action]/{Id}")]
+        //[Authorize(AuthenticationSchemes = "Admin", Roles = "Admin")]
+        public async Task<IActionResult> GetStudent1(int Id)
+        {
+            var data = await _studentService.GetStudentById(Id);
+            return StatusCode(data.StatusCode, data);
+        }
+
         //[HttpGet("[action]/{Id}")]
         ////[Authorize(AuthenticationSchemes = "Admin", Roles = "Admin,User")]
         //public async Task<IActionResult> GetStudentByUserId(int Id)
@@ -45,16 +55,14 @@ namespace RestfullApiNet6M136.Controllers
         {
             var data = await _studentService.AddStudent(model);
             return StatusCode(data.StatusCode, data);
-
         }
 
         [HttpPut("[action]")]
         //[Authorize(AuthenticationSchemes = "Admin", Roles = "Admin")]
-        public async Task<IActionResult> ChangeStudent([FromBody]ChangeSchoolDTO model)
+        public async Task<IActionResult> ChangeStudent([FromBody] ChangeSchoolDTO model)
         {
             var data = await _studentService.ChangeSchool(model);
             return StatusCode(data.StatusCode, data);
-
         }
 
         [HttpPut("[action]/{studentId}/{newStudentId}")]
@@ -63,12 +71,11 @@ namespace RestfullApiNet6M136.Controllers
         {
             var data = await _studentService.ChangeSchool(studentId, newStudentId);
             return StatusCode(data.StatusCode, data);
-
         }
 
         [HttpPut("[action]")]
         //[Authorize(AuthenticationSchemes = "Admin", Roles = "User")]
-        public async Task<IActionResult> UpdateStudent([FromBody]StudentUpdateDTO model, [FromQuery]int id)
+        public async Task<IActionResult> UpdateStudent([FromBody] StudentUpdateDTO model, [FromQuery] int id)
         {
             var data = await _studentService.UpdateStudent(model, id);
             return StatusCode(data.StatusCode, data);
@@ -81,5 +88,12 @@ namespace RestfullApiNet6M136.Controllers
             var data = await _studentService.DeleteStudent(Id);
             return StatusCode(data.StatusCode, data);
         }
+
+        [HttpDelete("[action]")]
+        //[Authorize(AuthenticationSchemes = "Admin", Roles = "User")]
+        public async Task<IActionResult> DeleteStudentTestForOneLine([FromQuery] int Id) =>
+            await _studentService.DeleteStudent(Id) is GenericResponseModel<bool> data
+                ? StatusCode(data.StatusCode, data)
+                : NotFound();
     }
 }

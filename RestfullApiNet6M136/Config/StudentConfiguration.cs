@@ -9,17 +9,12 @@ namespace RestfullApiNet6M136.Config
     {
         public void Configure(EntityTypeBuilder<Student> builder)
         {
-            builder.Property(b => b.Name)//string
+            builder.Property(b => b.Name) //string
                 .IsRequired()
                 .HasMaxLength(100);
 
-            builder.Property(b => b.SchoolId)//int
-            .IsRequired();
-            
-            //Todo "sadw"
-
+            builder.Property(b => b.SchoolId) //int
+                .IsRequired();
         }
-        
-        
     }
 }

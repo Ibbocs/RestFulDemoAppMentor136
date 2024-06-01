@@ -263,6 +263,7 @@ namespace RestfullApiNet6M136.Implementation.Services
             if (data != null)
             {
                 await _school.GetByIdAsync(data.SchoolId);
+                
                 var dtos = mapper.Map<StudentGetDTO>(data);
 
                 return new GenericResponseModel<StudentGetDTO>

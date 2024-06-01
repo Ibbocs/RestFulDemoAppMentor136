@@ -2,7 +2,7 @@
 
 namespace RestfullApiNet6M136.Abstraction.IRepositories.IStudentRepos
 {
-    public interface IStudentRepository:IRepository<Student>
+    public interface IStudentRepository : IRepository<Student>
     {
         void Print(string text);
     }

@@ -2,7 +2,7 @@
 
 namespace RestfullApiNet6M136.Abstraction.IRepositories.ISchoolRepos
 {
-    public interface ISchoolRepository:IRepository<School>
+    public interface ISchoolRepository : IRepository<School>
     {
     }
 }
