@@ -12,8 +12,7 @@ namespace RestfullApiNet6M136.Context
         public AppDbContext(DbContextOptions options) : base(options)
         {
         }
-
-
+        
         public DbSet<Student> Students { get; set; }
         public DbSet<School> Schools { get; set; }
 

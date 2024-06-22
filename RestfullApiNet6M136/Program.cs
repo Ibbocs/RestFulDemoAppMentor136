@@ -177,7 +177,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.ConfigureExceptionHandler(/*app.Services.GetRequiredService<ILogger<Program>>()*/);
-
 //serilogun requestleri loglamasi ucun
 app.UseSerilogRequestLogging();
 

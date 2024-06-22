@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
-using System.Net;
-using static System.Net.Mime.MediaTypeNames;
-using System.Net.Mime;
+﻿using System.Net;
 using System.Text.Json;
+using Microsoft.AspNetCore.Diagnostics;
 using RestfullApiNet6M136.Models;
 using Serilog;
 

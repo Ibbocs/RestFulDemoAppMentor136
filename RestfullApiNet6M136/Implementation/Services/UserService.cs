@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
-using Azure;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using RestfullApiNet6M136.Abstraction.Services;
 using RestfullApiNet6M136.DTOs.UserDTOs;
 using RestfullApiNet6M136.Entities.Identity;
 using RestfullApiNet6M136.Models;
 using Serilog;
-using System.Text;
 
 namespace RestfullApiNet6M136.Implementation.Services
 {

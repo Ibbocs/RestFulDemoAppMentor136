@@ -28,5 +28,4 @@
     <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.8.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
-
 </Project>
